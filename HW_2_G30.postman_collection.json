@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "6d2a6a63-4e4c-474d-b9fb-e81c1825d909",
+		"name": "HW_2_G30",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20812892"
+	},
+	"item": [
+		{
+			"name": "first",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"This is the first responce from server!\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://162.55.220.72:5005/first",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"first"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info_3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка наличия статус кода 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Парс тела ответа в json\r",
+							"let parseJson = pm.response.json();\r",
+							"console.log(parseJson);\r",
+							"let respName = parseJson.name;\r",
+							"let respAge = parseJson.age;\r",
+							"let respSalary = parseJson.salary;\r",
+							"\r",
+							"//Спарсить request\r",
+							"let req = request.data\r",
+							"let req_name = req.name\r",
+							"let req_age = req.age\r",
+							"let req_Salary = req.salary\r",
+							"//Конвертация String -> Int\r",
+							"console.log(req)\r",
+							"\r",
+							"let req_salary = Number(req_Salary)\r",
+							"\r",
+							"//Проверить, что name в ответе равно name s request \r",
+							"pm.test(\"Name = Dima\", function () {\r",
+							"    pm.expect(parseJson.name).to.eql(respName);\r",
+							"});\r",
+							"//Проверить, что age в ответе равно age s request \r",
+							"pm.test(\"age = 24\", function () {\r",
+							"    pm.expect(parseJson.age).to.eql(respAge);\r",
+							"});\r",
+							"//Проверить, что salary в ответе равно salary s request\r",
+							"pm.test(\"salary = 70000\", function(){\r",
+							"    pm.expect(parseJson.salary).to.eql(respSalary)\r",
+							"   \r",
+							"})\r",
+							"//Проверить, что name в ответе равно name s request (name забрать из request.)\r",
+							"pm.test(\"name = Dima\", function(){\r",
+							"    pm.expect(req_name).to.eql(respName)\r",
+							"})\r",
+							"//Проверить, что age в ответе равно age s request (age забрать из request.)\r",
+							"pm.test(\"Age = 24\", function(){\r",
+							"pm.expect(respAge).to.eql(req_age)\r",
+							"})\r",
+							"//Проверить, что salary в ответе равно salary s request (salary забрать из request.)\r",
+							"pm.test(\"Salary = 70000\", function(){\r",
+							"    pm.expect(respSalary).to.eql(req_salary)\r",
+							"})\r",
+							"\r",
+							"console.log(respName);\r",
+							"console.log(respAge);\r",
+							"console.log(respSalary);\r",
+							"\r",
+							"console.log(req_name);\r",
+							"console.log(req_age);\r",
+							"console.log(req_salary);\r",
+							"\r",
+							"//Вывести в консоль параметр family из response\r",
+							"//JSON.stringify - потому что в include проверяем строку, поэтому надо из JSON переделать в строку. Выведет все списком\r",
+							"pm.test(\"Check family\", function(){\r",
+							"    pm.expect(JSON.stringify(parseJson)).to.include(\"family\")\r",
+							"})\r",
+							"//Проверить что u_salary_1_5_year в ответе равно salary*4 (salary забрать из request)\r",
+							"let salary_4 = parseJson.family.u_salary_1_5_year\r",
+							"pm.test(\"salary_4 = 280000\", function(){\r",
+							"    pm.expect(salary_4).to.eql(req_salary * 4)\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Dima",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "24",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "70000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
